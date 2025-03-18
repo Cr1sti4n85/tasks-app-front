@@ -1,11 +1,9 @@
 import { ChangeEvent, FormEvent, useState } from "react";
+import { Task } from "../types/task.type";
+import { createTaks } from "../api/tasks";
 
 function TaskForm() {
-  const [task, setTask] = useState<{
-    title: string;
-    description: string;
-    completed: boolean;
-  }>({
+  const [task, setTask] = useState<Task>({
     title: "",
     description: "",
     completed: false,
@@ -17,8 +15,11 @@ function TaskForm() {
     setTask({ ...task, [e.target.name]: e.target.value });
   };
 
-  const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    const res = await createTaks(task);
+    const data = res.json();
+    console.log(data);
   };
 
   return (
