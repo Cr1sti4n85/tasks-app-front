@@ -1,12 +1,36 @@
+import { ChangeEvent, FormEvent, useState } from "react";
+
 function TaskForm() {
+  const [task, setTask] = useState<{
+    title: string;
+    description: string;
+    completed: boolean;
+  }>({
+    title: "",
+    description: "",
+    completed: false,
+  });
+
+  const handleChange = (
+    e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) => {
+    setTask({ ...task, [e.target.name]: e.target.value });
+  };
+
+  const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+  };
+
   return (
     <div>
-      <form action="">
+      <form action="" onSubmit={handleSubmit}>
         <input
           type="text"
           name="title"
           placeholder="Write a title"
           className="border-2 border-gray-700 p-2 rounded-lg bg-zinc-800 block w-full my-2"
+          onChange={handleChange}
+          value={task.title}
         />
         <textarea
           className="border-2 border-gray-700 p-2 rounded-lg bg-zinc-800 block w-full my-2"
@@ -19,6 +43,7 @@ function TaskForm() {
             type="checkbox"
             name="completed"
             className="h-5 w-5 text-indigo-600"
+            onChange={(e) => setTask({ ...task, completed: e.target.checked })}
           />
           <span>Done</span>
         </label>
