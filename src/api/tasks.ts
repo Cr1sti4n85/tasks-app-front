@@ -1,6 +1,6 @@
 import { Task } from "../types/task.type";
 
-const API = "http://localhost:3000";
+const API = "http://localhost:3000/api";
 
 const createTaks = (task: Task) => {
   return fetch(`${API}/tasks`, {

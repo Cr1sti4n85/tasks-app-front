@@ -18,7 +18,7 @@ function TaskForm() {
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const res = await createTaks(task);
-    const data = res.json();
+    const data = await res.json();
     console.log(data);
   };
 
@@ -38,6 +38,8 @@ function TaskForm() {
           name="description"
           rows={3}
           placeholder="Write a description"
+          onChange={handleChange}
+          value={task.description}
         ></textarea>
         <label htmlFor="" className="inline-flex items-center gap-x-2">
           <input
