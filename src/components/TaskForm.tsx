@@ -1,9 +1,9 @@
 import { ChangeEvent, FormEvent, useState } from "react";
-import { Task } from "../types/task.type";
+import { CreatedTask } from "../types/task.type";
 import { createTaks } from "../api/tasks";
 
 function TaskForm() {
-  const [task, setTask] = useState<Task>({
+  const [task, setTask] = useState<CreatedTask>({
     title: "",
     description: "",
     completed: false,
