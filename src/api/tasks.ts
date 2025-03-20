@@ -2,7 +2,7 @@ import { CreatedTask } from "../types/task.type";
 
 const API = "http://localhost:3000/api";
 
-const createTaks = (task: CreatedTask) => {
+const createTaskRequest = (task: CreatedTask) => {
   return fetch(`${API}/tasks`, {
     method: "POST",
     headers: {
@@ -16,4 +16,4 @@ const getTasks = () => {
   return fetch(`${API}/tasks`);
 };
 
-export { createTaks, getTasks };
+export { createTaskRequest, getTasks };

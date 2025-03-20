@@ -1,6 +1,6 @@
 import React, { createContext, useEffect, useState } from "react";
-import { getTasks } from "../api/tasks";
-import { Task, TasksContext } from "../types/task.type";
+import { createTaskRequest, getTasks } from "../api/tasks";
+import { Task, TasksContext, CreatedTask } from "../types/task.type";
 
 interface ContextProps {
   children: React.ReactNode;
@@ -8,6 +8,7 @@ interface ContextProps {
 
 export const TaskContext = createContext<TasksContext>({
   tasks: [],
+  createTask: () => {},
 });
 
 export const TaskProvider: React.FC<ContextProps> = ({ children }) => {
@@ -22,7 +23,16 @@ export const TaskProvider: React.FC<ContextProps> = ({ children }) => {
 
     get();
   }, []);
+
+  const createTask = async (task: CreatedTask) => {
+    const res = await createTaskRequest(task);
+    const data = await res.json();
+    setTasks([...tasks, data]);
+  };
+
   return (
-    <TaskContext.Provider value={{ tasks }}>{children}</TaskContext.Provider>
+    <TaskContext.Provider value={{ tasks, createTask }}>
+      {children}
+    </TaskContext.Provider>
   );
 };
