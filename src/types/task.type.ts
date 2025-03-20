@@ -12,3 +12,7 @@ export type CreatedTask = Omit<Task, "_id" | "createdAt" | "updatedAt">;
 export interface Props {
   task: Task;
 }
+
+export interface TasksContext {
+  tasks: Task[];
+}
