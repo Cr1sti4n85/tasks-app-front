@@ -4,7 +4,7 @@ interface ContextProps {
   children: React.ReactNode;
 }
 
-const TaskContext = createContext({
+export const TaskContext = createContext({
   tasks: [],
 });
 
