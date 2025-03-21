@@ -1,5 +1,6 @@
 import useTasks from "../context/useTasks";
 import { Props, Task } from "../types/task.type";
+import { IoCheckmarkDone, IoTrashOutline } from "react-icons/io5";
 
 function TaskItem({ task }: Props) {
   const { deleteTask, updateTask } = useTasks();
@@ -28,13 +29,13 @@ function TaskItem({ task }: Props) {
           onClick={async () => await handleUpdate(task)}
           className="hover:cursor-pointer"
         >
-          {task.completed ? "Completed" : "Update"}
+          {task.completed ? <IoCheckmarkDone /> : "Update"}
         </button>
         <button
           onClick={async () => await handleDelete(task._id)}
           className="hover:cursor-pointer"
         >
-          Delete
+          <IoTrashOutline />
         </button>
       </div>
     </div>
