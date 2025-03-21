@@ -1,5 +1,10 @@
 import React, { createContext, useEffect, useState } from "react";
-import { createTaskRequest, deleteTaskRequest, getTasks } from "../api/tasks";
+import {
+  createTaskRequest,
+  deleteTaskRequest,
+  getTasks,
+  updateTaskRequest,
+} from "../api/tasks";
 import { Task, TasksContext, CreatedTask } from "../types/task.type";
 
 interface ContextProps {
@@ -10,6 +15,7 @@ export const TaskContext = createContext<TasksContext>({
   tasks: [],
   createTask: async () => {},
   deleteTask: async () => {},
+  updateTask: async () => {},
 });
 
 export const TaskProvider: React.FC<ContextProps> = ({ children }) => {
@@ -38,8 +44,19 @@ export const TaskProvider: React.FC<ContextProps> = ({ children }) => {
     }
   };
 
+  const updateTask = async (id: string, task: Partial<Task>) => {
+    const res = await updateTaskRequest(id, task);
+    const data = await res.json();
+
+    if (res.status === 200) {
+      setTasks(
+        tasks.map((task) => (task._id === id ? { ...task, ...data } : task))
+      );
+    }
+  };
+
   return (
-    <TaskContext.Provider value={{ tasks, createTask, deleteTask }}>
+    <TaskContext.Provider value={{ tasks, createTask, deleteTask, updateTask }}>
       {children}
     </TaskContext.Provider>
   );
