@@ -1,5 +1,5 @@
 import React, { createContext, useEffect, useState } from "react";
-import { createTaskRequest, getTasks } from "../api/tasks";
+import { createTaskRequest, deleteTaskRequest, getTasks } from "../api/tasks";
 import { Task, TasksContext, CreatedTask } from "../types/task.type";
 
 interface ContextProps {
@@ -8,7 +8,8 @@ interface ContextProps {
 
 export const TaskContext = createContext<TasksContext>({
   tasks: [],
-  createTask: () => {},
+  createTask: async () => {},
+  deleteTask: async () => {},
 });
 
 export const TaskProvider: React.FC<ContextProps> = ({ children }) => {
@@ -30,8 +31,15 @@ export const TaskProvider: React.FC<ContextProps> = ({ children }) => {
     setTasks([...tasks, data]);
   };
 
+  const deleteTask = async (id: string) => {
+    const res = await deleteTaskRequest(id);
+    if (res.status === 204) {
+      setTasks(tasks.filter((task) => task._id !== id));
+    }
+  };
+
   return (
-    <TaskContext.Provider value={{ tasks, createTask }}>
+    <TaskContext.Provider value={{ tasks, createTask, deleteTask }}>
       {children}
     </TaskContext.Provider>
   );

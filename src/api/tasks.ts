@@ -16,4 +16,10 @@ const getTasks = () => {
   return fetch(`${API}/tasks`);
 };
 
-export { createTaskRequest, getTasks };
+const deleteTaskRequest = (id: string) => {
+  return fetch(`${API}/tasks/${id}`, {
+    method: "DELETE",
+  });
+};
+
+export { createTaskRequest, getTasks, deleteTaskRequest };

@@ -15,5 +15,6 @@ export interface Props {
 
 export interface TasksContext {
   tasks: Task[];
-  createTask: (task: CreatedTask) => void;
+  createTask: (task: CreatedTask) => Promise<void>;
+  deleteTask: (id: string) => Promise<void>;
 }
