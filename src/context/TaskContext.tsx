@@ -16,10 +16,14 @@ export const TaskContext = createContext<TasksContext>({
   createTask: async () => {},
   deleteTask: async () => {},
   updateTask: async () => {},
+  selectedTask: null,
+  selectTask: () => {},
+  clearSelectedTask: () => {},
 });
 
 export const TaskProvider: React.FC<ContextProps> = ({ children }) => {
   const [tasks, setTasks] = useState<Task[]>([]);
+  const [selectedTask, setSelectedTask] = useState<Task | null>(null);
 
   useEffect(() => {
     async function get() {
@@ -53,10 +57,24 @@ export const TaskProvider: React.FC<ContextProps> = ({ children }) => {
         tasks.map((task) => (task._id === id ? { ...task, ...data } : task))
       );
     }
+    setSelectedTask(null);
   };
 
+  const selectTask = (task: Task) => setSelectedTask(task);
+  const clearSelectedTask = () => setSelectedTask(null);
+
   return (
-    <TaskContext.Provider value={{ tasks, createTask, deleteTask, updateTask }}>
+    <TaskContext.Provider
+      value={{
+        tasks,
+        createTask,
+        deleteTask,
+        updateTask,
+        selectedTask,
+        selectTask,
+        clearSelectedTask,
+      }}
+    >
       {children}
     </TaskContext.Provider>
   );

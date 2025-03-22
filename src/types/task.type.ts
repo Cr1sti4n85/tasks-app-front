@@ -18,4 +18,7 @@ export interface TasksContext {
   createTask: (task: CreatedTask) => Promise<void>;
   deleteTask: (id: string) => Promise<void>;
   updateTask: (id: string, task: Partial<Task>) => Promise<void>;
+  selectedTask: Task | null;
+  selectTask: (task: Task) => void;
+  clearSelectedTask: () => void;
 }

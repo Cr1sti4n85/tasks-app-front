@@ -3,7 +3,7 @@ import { Props, Task } from "../types/task.type";
 import { IoCheckmarkDone, IoTrashOutline } from "react-icons/io5";
 
 function TaskItem({ task }: Props) {
-  const { deleteTask, updateTask } = useTasks();
+  const { deleteTask, selectTask } = useTasks();
 
   const handleDelete = async (id: string) => {
     if (!window.confirm("Are you sure you want to delete this task?")) return;
@@ -11,8 +11,7 @@ function TaskItem({ task }: Props) {
   };
 
   const handleUpdate = async (task: Task) => {
-    if (!window.confirm("Are you sure you want to update this task?")) return;
-    await updateTask(task._id, { completed: !task.completed });
+    selectTask(task);
   };
 
   return (

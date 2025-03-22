@@ -1,4 +1,4 @@
-import { ChangeEvent, FormEvent, useState } from "react";
+import { ChangeEvent, FormEvent, useEffect, useState } from "react";
 import { CreatedTask } from "../types/task.type";
 import useTasks from "../context/useTasks";
 
@@ -9,7 +9,8 @@ function TaskForm() {
     completed: false,
   });
 
-  const { createTask } = useTasks();
+  const { createTask, updateTask, selectedTask, clearSelectedTask } =
+    useTasks();
 
   const handleChange = (
     e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
@@ -19,8 +20,29 @@ function TaskForm() {
 
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    createTask(task);
+    if (selectedTask) {
+      updateTask(selectedTask._id, task);
+      clearSelectedTask();
+    } else {
+      createTask(task);
+    }
   };
+
+  useEffect(() => {
+    if (selectedTask) {
+      setTask({
+        title: selectedTask.title,
+        description: selectedTask.description,
+        completed: selectedTask.completed,
+      });
+    } else {
+      setTask({
+        title: "",
+        description: "",
+        completed: false,
+      });
+    }
+  }, [selectedTask]);
 
   return (
     <div>
@@ -51,7 +73,7 @@ function TaskForm() {
           <span>Done</span>
         </label>
         <button className="bg-indigo-500 px-3 py-2 w-full rounded-md">
-          Save
+          {selectedTask ? "Update" : "Save"}
         </button>
       </form>
     </div>
