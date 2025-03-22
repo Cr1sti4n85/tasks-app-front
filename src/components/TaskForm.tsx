@@ -22,10 +22,15 @@ function TaskForm() {
     e.preventDefault();
     if (selectedTask) {
       updateTask(selectedTask._id, task);
-      clearSelectedTask();
     } else {
       createTask(task);
+      setTask({
+        title: "",
+        description: "",
+        completed: false,
+      });
     }
+    clearSelectedTask();
   };
 
   useEffect(() => {
